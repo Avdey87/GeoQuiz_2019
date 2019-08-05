@@ -10,6 +10,7 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import java.util.ArrayList;
 
 
@@ -29,7 +30,7 @@ public class QuizActivity extends AppCompatActivity {
     private static boolean PRESSED = false;
     private static String COAST = "coast";
 
-    private ArrayList<Integer> alreadyAnswer = new ArrayList<>();
+    private ArrayList alreadyAnswer = new ArrayList<>();
 
 
     private Question[] mQuestionBank = new Question[]{
@@ -72,7 +73,6 @@ public class QuizActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 checkAnswer(true);
-                alreadyAnswer.add(mCurrentIndex);
                 Log.d(TAG, alreadyAnswer.toString());
                 pressedButton();
 
@@ -83,7 +83,6 @@ public class QuizActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 checkAnswer(false);
-                alreadyAnswer.add(mCurrentIndex);
                 Log.d(TAG, alreadyAnswer.toString());
                 pressedButton();
             }
@@ -134,6 +133,8 @@ public class QuizActivity extends AppCompatActivity {
         boolean answerIsTrue = mQuestionBank[mCurrentIndex].ismAnswerTrue();
         int messageResId = 0;
 
+        alreadyAnswer.add(mCurrentIndex);
+
         if (userPressedTrue == answerIsTrue) {
             messageResId = R.string.correct_toast;
             coast++;
@@ -146,17 +147,11 @@ public class QuizActivity extends AppCompatActivity {
     }
 
     private void updateQuestion() {
+        Log.d(TAG, "updateQuestion");
         int question = mQuestionBank[mCurrentIndex].getmTextResId();
+
         mQuestionTextVew.setText(question);
-        for (int i = 0; i < mQuestionBank.length; i++) {
-            if (i == question) {
-                Log.d(TAG, " i = " + i + " mCurrentIndex = " + question);
-                pressedButton();
-            } else {
-                mTrueButton.setEnabled(true);
-                mFalseButton.setEnabled(true);
-            }
-        }
+
     }
 
     private void pressedButton() {
