@@ -1,6 +1,7 @@
 package com.example.geoquiz;
 
 
+import android.nfc.Tag;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
@@ -147,12 +148,14 @@ public class QuizActivity extends AppCompatActivity {
     }
 
     private void updateQuestion() {
-        Log.d(TAG, "updateQuestion");
         int question = mQuestionBank[mCurrentIndex].getmTextResId();
         mQuestionTextVew.setText(question);
         for (int i = 0; i < alreadyAnswer.toArray().length; i++) {
-            if (alreadyAnswer.get(i).equals(question)) {
+            Log.d(TAG, "alreadyAnswer.get(i) " + alreadyAnswer.get(i) + " mCurrentIndex = " + mCurrentIndex);
+            if (alreadyAnswer.get(i).equals(mCurrentIndex)) {
                 pressedButton();
+            } else {
+                return;
             }
         }
 
