@@ -68,6 +68,7 @@ public class QuizActivity extends AppCompatActivity {
 
         if (PRESSED == true) {
             pressedButton();
+            Log.d(TAG, "BUTTON FALSE " + " onCreate");
         }
 
         mTrueButton.setOnClickListener(new View.OnClickListener() {
@@ -76,6 +77,7 @@ public class QuizActivity extends AppCompatActivity {
                 checkAnswer(true);
                 Log.d(TAG, alreadyAnswer.toString());
                 pressedButton();
+                Log.d(TAG, "BUTTON FALSE TRUE_BUTTON");
 
             }
         });
@@ -86,6 +88,7 @@ public class QuizActivity extends AppCompatActivity {
                 checkAnswer(false);
                 Log.d(TAG, alreadyAnswer.toString());
                 pressedButton();
+                Log.d(TAG, "BUTTON FALSE  FALSE_BUTTON");
             }
         });
 
@@ -149,15 +152,26 @@ public class QuizActivity extends AppCompatActivity {
 
     private void updateQuestion() {
         int question = mQuestionBank[mCurrentIndex].getmTextResId();
-        mQuestionTextVew.setText(question);
         for (int i = 0; i < alreadyAnswer.toArray().length; i++) {
             Log.d(TAG, "alreadyAnswer.get(i) " + alreadyAnswer.get(i) + " mCurrentIndex = " + mCurrentIndex);
             if (alreadyAnswer.get(i).equals(mCurrentIndex)) {
-                pressedButton();
+                Log.d(TAG, "IF ");
+                Log.d(TAG, " AA = " + alreadyAnswer.get(i) + " mCurrentIndex = " + mCurrentIndex);
+
+                mTrueButton.setEnabled(false);
+                mFalseButton.setEnabled(false);
+                Log.d(TAG, "BUTTON FALSE");
+                mQuestionTextVew.setText(question);
+
             } else {
-                return;
+                Log.d(TAG, "ELSE");
+                mTrueButton.setEnabled(true);
+                mFalseButton.setEnabled(true);
+                Log.d(TAG, "BUTTON TRUE");
+                mQuestionTextVew.setText(question);
             }
         }
+
 
     }
 
