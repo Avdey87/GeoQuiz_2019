@@ -149,8 +149,12 @@ public class QuizActivity extends AppCompatActivity {
     private void updateQuestion() {
         Log.d(TAG, "updateQuestion");
         int question = mQuestionBank[mCurrentIndex].getmTextResId();
-
         mQuestionTextVew.setText(question);
+        for (int i = 0; i < alreadyAnswer.toArray().length; i++) {
+            if (alreadyAnswer.get(i).equals(question)) {
+                pressedButton();
+            }
+        }
 
     }
 
