@@ -30,8 +30,9 @@ public class QuizActivity extends AppCompatActivity {
     private static String STATE_BUTTON = "state button";
     private static boolean PRESSED = false;
     private static String COAST = "coast";
+    private static String ALREADY_ANSWERED = "already answered";
 
-    private ArrayList alreadyAnswer = new ArrayList<>();
+    private ArrayList<Integer> alreadyAnswer = new ArrayList<>();
 
 
     private Question[] mQuestionBank = new Question[]{
@@ -55,8 +56,10 @@ public class QuizActivity extends AppCompatActivity {
             mCurrentIndex = savedInstanceState.getInt(KEY_INDEX, 0);
             PRESSED = savedInstanceState.getBoolean(STATE_BUTTON, false);
             coast = savedInstanceState.getInt(COAST, 0);
+            alreadyAnswer = savedInstanceState.getIntegerArrayList(ALREADY_ANSWERED);
 
         }
+
 
         mQuestionTextVew = findViewById(R.id.question_text_view);
 
@@ -152,23 +155,17 @@ public class QuizActivity extends AppCompatActivity {
 
     private void updateQuestion() {
         int question = mQuestionBank[mCurrentIndex].getmTextResId();
+        mQuestionTextVew.setText(question);
         for (int i = 0; i < alreadyAnswer.toArray().length; i++) {
             Log.d(TAG, "alreadyAnswer.get(i) " + alreadyAnswer.get(i) + " mCurrentIndex = " + mCurrentIndex);
             if (alreadyAnswer.get(i).equals(mCurrentIndex)) {
-                Log.d(TAG, "IF ");
-                Log.d(TAG, " AA = " + alreadyAnswer.get(i) + " mCurrentIndex = " + mCurrentIndex);
-
-                mTrueButton.setEnabled(false);
-                mFalseButton.setEnabled(false);
-                Log.d(TAG, "BUTTON FALSE");
-                mQuestionTextVew.setText(question);
+                pressedButton();
+                return;
 
             } else {
-                Log.d(TAG, "ELSE");
                 mTrueButton.setEnabled(true);
                 mFalseButton.setEnabled(true);
-                Log.d(TAG, "BUTTON TRUE");
-                mQuestionTextVew.setText(question);
+
             }
         }
 
@@ -206,6 +203,7 @@ public class QuizActivity extends AppCompatActivity {
         outState.putInt(KEY_INDEX, mCurrentIndex);
         outState.putBoolean(STATE_BUTTON, PRESSED);
         outState.putInt(COAST, coast);
+        outState.putIntegerArrayList(ALREADY_ANSWERED, alreadyAnswer);
     }
 
     @Override
