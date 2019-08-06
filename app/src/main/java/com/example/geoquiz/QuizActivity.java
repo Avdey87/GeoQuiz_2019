@@ -165,10 +165,8 @@ public class QuizActivity extends AppCompatActivity {
             } else {
                 mTrueButton.setEnabled(true);
                 mFalseButton.setEnabled(true);
-
             }
         }
-
 
     }
 
