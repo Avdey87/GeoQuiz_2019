@@ -1,7 +1,5 @@
 package com.example.geoquiz;
 
-
-import android.nfc.Tag;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
@@ -34,7 +32,6 @@ public class QuizActivity extends AppCompatActivity {
 
     private ArrayList<Integer> alreadyAnswer = new ArrayList<>();
 
-
     private Question[] mQuestionBank = new Question[]{
             new Question(R.string.question_australia, true),
             new Question(R.string.question_oceans, true),
@@ -57,12 +54,9 @@ public class QuizActivity extends AppCompatActivity {
             PRESSED = savedInstanceState.getBoolean(STATE_BUTTON, false);
             coast = savedInstanceState.getInt(COAST, 0);
             alreadyAnswer = savedInstanceState.getIntegerArrayList(ALREADY_ANSWERED);
-
         }
 
-
         mQuestionTextVew = findViewById(R.id.question_text_view);
-
         mTrueButton = findViewById(R.id.true_button);
         mFalseButton = findViewById(R.id.false_button);
         mNextButton = findViewById(R.id.next_button);
@@ -113,8 +107,6 @@ public class QuizActivity extends AppCompatActivity {
                 } else {
                     mCurrentIndex = (mCurrentIndex + 1) % mQuestionBank.length;
                     updateQuestion();
-
-
                 }
                 PRESSED = false;
             }
@@ -145,10 +137,8 @@ public class QuizActivity extends AppCompatActivity {
         if (userPressedTrue == answerIsTrue) {
             messageResId = R.string.correct_toast;
             coast++;
-
         } else {
             messageResId = R.string.incorrect_toast;
-
         }
         Toast.makeText(this, messageResId, Toast.LENGTH_SHORT).show();
     }
@@ -157,11 +147,9 @@ public class QuizActivity extends AppCompatActivity {
         int question = mQuestionBank[mCurrentIndex].getmTextResId();
         mQuestionTextVew.setText(question);
         for (int i = 0; i < alreadyAnswer.toArray().length; i++) {
-            Log.d(TAG, "alreadyAnswer.get(i) " + alreadyAnswer.get(i) + " mCurrentIndex = " + mCurrentIndex);
             if (alreadyAnswer.get(i).equals(mCurrentIndex)) {
                 pressedButton();
                 return;
-
             } else {
                 mTrueButton.setEnabled(true);
                 mFalseButton.setEnabled(true);
@@ -179,25 +167,21 @@ public class QuizActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
-        Log.d(TAG, "onStart() called");
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        Log.d(TAG, "onResume() called");
     }
 
     @Override
     protected void onPause() {
         super.onPause();
-        Log.d(TAG, "onPause() called");
     }
 
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-        Log.i(TAG, "onSaveInstance");
         outState.putInt(KEY_INDEX, mCurrentIndex);
         outState.putBoolean(STATE_BUTTON, PRESSED);
         outState.putInt(COAST, coast);
@@ -207,13 +191,11 @@ public class QuizActivity extends AppCompatActivity {
     @Override
     protected void onStop() {
         super.onStop();
-        Log.d(TAG, "onStop() called");
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        Log.d(TAG, "onDestroy() called");
     }
 }
 
