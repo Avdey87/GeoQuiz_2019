@@ -164,6 +164,16 @@ public class QuizActivity extends AppCompatActivity {
         PRESSED = true;
     }
 
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putInt(KEY_INDEX, mCurrentIndex);
+        outState.putBoolean(STATE_BUTTON, PRESSED);
+        outState.putInt(COAST, coast);
+        outState.putIntegerArrayList(ALREADY_ANSWERED, alreadyAnswer);
+    }
+
     @Override
     protected void onStart() {
         super.onStart();
@@ -179,14 +189,6 @@ public class QuizActivity extends AppCompatActivity {
         super.onPause();
     }
 
-    @Override
-    protected void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
-        outState.putInt(KEY_INDEX, mCurrentIndex);
-        outState.putBoolean(STATE_BUTTON, PRESSED);
-        outState.putInt(COAST, coast);
-        outState.putIntegerArrayList(ALREADY_ANSWERED, alreadyAnswer);
-    }
 
     @Override
     protected void onStop() {
