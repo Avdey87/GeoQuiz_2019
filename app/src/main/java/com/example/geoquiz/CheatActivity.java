@@ -13,12 +13,12 @@ public class CheatActivity extends AppCompatActivity {
 
     private static String EXTRA_ANSWER_IS_TRUE = "com.exmpale.geoquiz.answer_is_true";
     private static String EXTRA_ANSWER_SHOW = "com.exmpale.geoquiz.answer_show";
+    private static String CURRENT_ANSWER_STATE = " current answer state";
     private boolean mAnswerIsTrue;
 
     private TextView mAnswerTextView;
     private Button mShowAnswerButton;
-
-    private static boolean mShowAnswer;
+    private boolean mAnswerState;
 
     public static Intent newIntent(Context packageContext, boolean answerIsTrue) {
         Intent intent = new Intent(packageContext, CheatActivity.class);
@@ -32,7 +32,8 @@ public class CheatActivity extends AppCompatActivity {
         setContentView(R.layout.activity_cheat);
 
         if (savedInstanceState != null) {
-            mShowAnswer = savedInstanceState.getBoolean(EXTRA_ANSWER_SHOW, mShowAnswer);
+            mAnswerState = savedInstanceState.getBoolean(CURRENT_ANSWER_STATE, mAnswerState);
+            setAnswerShowResult(mAnswerState);
         }
 
         mAnswerIsTrue = getIntent().getBooleanExtra(EXTRA_ANSWER_IS_TRUE, false);
@@ -49,13 +50,13 @@ public class CheatActivity extends AppCompatActivity {
                 } else {
                     mAnswerTextView.setText(R.string.false_button);
                 }
-                setAnswerShowResult(true);
+                mAnswerState = true;
+                setAnswerShowResult(mAnswerIsTrue);
             }
         });
     }
 
     private void setAnswerShowResult(boolean isAnswerShow) {
-        mShowAnswer = isAnswerShow;
         Intent data = new Intent();
         data.putExtra(EXTRA_ANSWER_SHOW, isAnswerShow);
         setResult(RESULT_OK, data);
@@ -68,6 +69,7 @@ public class CheatActivity extends AppCompatActivity {
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-        outState.putBoolean(EXTRA_ANSWER_SHOW, mShowAnswer);
+        outState.putBoolean(CURRENT_ANSWER_STATE, mAnswerState);
+
     }
 }
