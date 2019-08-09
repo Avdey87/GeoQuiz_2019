@@ -12,7 +12,11 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Set;
 
 
 public class QuizActivity extends AppCompatActivity {
@@ -32,7 +36,7 @@ public class QuizActivity extends AppCompatActivity {
     private static String ALREADY_ANSWERED = "already answered";
     private static final int REQUEST_CODE_CHEAT = 0;
 
-    private ArrayList<Integer> alreadyAnswer = new ArrayList<>();
+    private Map<Integer, Boolean> alreadyAnswer = new HashMap<>();
 
     private Question[] mQuestionBank = new Question[]{
             new Question(R.string.question_australia, true),
@@ -55,7 +59,9 @@ public class QuizActivity extends AppCompatActivity {
             mCurrentIndex = savedInstanceState.getInt(KEY_INDEX, 0);
             PRESSED = savedInstanceState.getBoolean(STATE_BUTTON, false);
             coast = savedInstanceState.getInt(COAST, 0);
-            alreadyAnswer = savedInstanceState.getIntegerArrayList(ALREADY_ANSWERED);
+            alreadyAnswer = (Map<Integer, Boolean>) savedInstanceState.getSerializable(ALREADY_ANSWERED);
+
+            Log.d("FIX", "HashMap" + alreadyAnswer.size());
         }
 
         mQuestionTextVew = findViewById(R.id.question_text_view);
@@ -146,14 +152,13 @@ public class QuizActivity extends AppCompatActivity {
                 return;
             }
             mIsCheater = CheatActivity.wasAnswerShow(data);
+            alreadyAnswer.put(mCurrentIndex, mIsCheater);
         }
     }
 
     private void checkAnswer(boolean userPressedTrue) {
         boolean answerIsTrue = mQuestionBank[mCurrentIndex].ismAnswerTrue();
         int messageResId = 0;
-        alreadyAnswer.add(mCurrentIndex);
-
         if (mIsCheater) {
             messageResId = R.string.judgment_toast;
         } else {
@@ -164,21 +169,22 @@ public class QuizActivity extends AppCompatActivity {
                 messageResId = R.string.incorrect_toast;
             }
         }
+        alreadyAnswer.put(mCurrentIndex, mIsCheater);
         Toast.makeText(this, messageResId, Toast.LENGTH_SHORT).show();
     }
 
     private void updateQuestion() {
         int question = mQuestionBank[mCurrentIndex].getmTextResId();
         mQuestionTextVew.setText(question);
-        for (int i = 0; i < alreadyAnswer.toArray().length; i++) {
-            if (alreadyAnswer.get(i).equals(mCurrentIndex)) {
+
+        if (alreadyAnswer.containsKey(mCurrentIndex)) {
                 pressedButton();
                 return;
-            } else {
-                mTrueButton.setEnabled(true);
-                mFalseButton.setEnabled(true);
-            }
+        } else {
+            mTrueButton.setEnabled(true);
+            mFalseButton.setEnabled(true);
         }
+
 
     }
 
@@ -195,7 +201,7 @@ public class QuizActivity extends AppCompatActivity {
         outState.putInt(KEY_INDEX, mCurrentIndex);
         outState.putBoolean(STATE_BUTTON, PRESSED);
         outState.putInt(COAST, coast);
-        outState.putIntegerArrayList(ALREADY_ANSWERED, alreadyAnswer);
+        outState.putSerializable(ALREADY_ANSWERED, (Serializable) alreadyAnswer);
     }
 
     @Override
