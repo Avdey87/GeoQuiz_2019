@@ -152,12 +152,7 @@ public class QuizActivity extends AppCompatActivity {
                 return;
             }
             mIsCheater = CheatActivity.wasAnswerShow(data);
-            if (mIsCheater) {
-                alreadyAnswer.put(mCurrentIndex, mIsCheater);
-
-
-            }
-
+            alreadyAnswer.put(mCurrentIndex, mIsCheater);
         }
     }
 
@@ -183,8 +178,8 @@ public class QuizActivity extends AppCompatActivity {
         mQuestionTextVew.setText(question);
 
         if (alreadyAnswer.containsKey(mCurrentIndex)) {
-                pressedButton();
-                return;
+            pressedButton();
+            return;
         } else {
             mTrueButton.setEnabled(true);
             mFalseButton.setEnabled(true);
