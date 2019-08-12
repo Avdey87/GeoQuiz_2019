@@ -51,7 +51,7 @@ public class CheatActivity extends AppCompatActivity {
                     mAnswerTextView.setText(R.string.false_button);
                 }
                 mAnswerState = true;
-                setAnswerShowResult(mAnswerIsTrue);
+                setAnswerShowResult(mAnswerState);
             }
         });
     }

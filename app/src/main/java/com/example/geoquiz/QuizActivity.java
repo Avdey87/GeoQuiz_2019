@@ -31,7 +31,7 @@ public class QuizActivity extends AppCompatActivity {
 
     private static String KEY_INDEX = "index";
     private static String STATE_BUTTON = "state button";
-    private static boolean PRESSED = false;
+    private boolean PRESSED = false;
     private static String COAST = "coast";
     private static String ALREADY_ANSWERED = "already answered";
     private static final int REQUEST_CODE_CHEAT = 0;
@@ -152,7 +152,13 @@ public class QuizActivity extends AppCompatActivity {
                 return;
             }
             mIsCheater = CheatActivity.wasAnswerShow(data);
-            alreadyAnswer.put(mCurrentIndex, mIsCheater);
+            if (mIsCheater) {
+                alreadyAnswer.put(mCurrentIndex, mIsCheater);
+                pressedButton();
+            } else {
+                alreadyAnswer.remove(mCurrentIndex);
+            }
+
         }
     }
 
