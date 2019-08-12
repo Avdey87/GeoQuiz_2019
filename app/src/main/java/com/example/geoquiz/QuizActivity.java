@@ -152,7 +152,12 @@ public class QuizActivity extends AppCompatActivity {
                 return;
             }
             mIsCheater = CheatActivity.wasAnswerShow(data);
-            alreadyAnswer.put(mCurrentIndex, mIsCheater);
+            if (mIsCheater) {
+                alreadyAnswer.put(mCurrentIndex, mIsCheater);
+
+
+            }
+
         }
     }
 
