@@ -39,6 +39,14 @@
         android:layout_gravity="bottom|center"
         android:text="@string/cheat_button" />
 
+    <TextView
+        android:id="@+id/cheat_coast"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="20dp"
+        android:layout_gravity="top|center"
+        tools:text="Cheat coast!" />
+
 
     <ImageButton
         android:id="@+id/prev_button"

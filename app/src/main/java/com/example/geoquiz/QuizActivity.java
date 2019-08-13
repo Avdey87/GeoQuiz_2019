@@ -27,7 +27,9 @@ public class QuizActivity extends AppCompatActivity {
     private ImageButton mNextButton;
     private ImageButton mPrevButton;
     private TextView mQuestionTextVew;
+    private TextView mCheatCoastTextView;
     private int coast = 0;
+    private int cheatCoast = 3;
 
     private static String KEY_INDEX = "index";
     private static String STATE_BUTTON = "state button";
@@ -35,6 +37,7 @@ public class QuizActivity extends AppCompatActivity {
     private static String COAST = "coast";
     private static String ALREADY_ANSWERED = "already answered";
     private static final int REQUEST_CODE_CHEAT = 0;
+    private static String CHEAT_COAST = "cheat coast";
 
     private Map<Integer, Boolean> alreadyAnswer = new HashMap<>();
 
@@ -70,6 +73,9 @@ public class QuizActivity extends AppCompatActivity {
         mCheatButton = findViewById(R.id.cheat_button);
         mNextButton = findViewById(R.id.next_button);
         mPrevButton = findViewById(R.id.prev_button);
+        mCheatCoastTextView = findViewById(R.id.cheat_coast);
+
+        mCheatCoastTextView.setText(Integer.toString(cheatCoast));
 
 
         if (PRESSED == true) {
@@ -155,6 +161,7 @@ public class QuizActivity extends AppCompatActivity {
             if (mIsCheater) {
                 alreadyAnswer.put(mCurrentIndex, mIsCheater);
                 pressedButton();
+                cheatCoast--;
             } else {
                 alreadyAnswer.remove(mCurrentIndex);
             }
@@ -189,6 +196,10 @@ public class QuizActivity extends AppCompatActivity {
         } else {
             mTrueButton.setEnabled(true);
             mFalseButton.setEnabled(true);
+            mCheatButton.setEnabled(true);
+        }
+        if (cheatCoast == 0) {
+            mCheatButton.setEnabled(false);
         }
 
 
@@ -197,6 +208,7 @@ public class QuizActivity extends AppCompatActivity {
     private void pressedButton() {
         mTrueButton.setEnabled(false);
         mFalseButton.setEnabled(false);
+        mCheatButton.setEnabled(false);
         PRESSED = true;
     }
 
@@ -208,6 +220,7 @@ public class QuizActivity extends AppCompatActivity {
         outState.putBoolean(STATE_BUTTON, PRESSED);
         outState.putInt(COAST, coast);
         outState.putSerializable(ALREADY_ANSWERED, (Serializable) alreadyAnswer);
+        outState.putInt(CHEAT_COAST, cheatCoast);
     }
 
     @Override

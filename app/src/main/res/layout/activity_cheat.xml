@@ -28,4 +28,13 @@
         android:layout_height="wrap_content"
         android:text="@string/show_answer_button" />
 
+    <TextView
+        android:id="@+id/sdk_level"
+        android:padding="24dp"
+        tools:text="SDK Level"
+        android:textSize="14dp"
+        android:typeface="sans"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
 </LinearLayout>

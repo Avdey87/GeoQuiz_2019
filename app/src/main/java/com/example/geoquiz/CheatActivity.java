@@ -7,7 +7,6 @@ import android.content.Intent;
 import android.os.Build;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewAnimationUtils;
 import android.widget.Button;
@@ -22,6 +21,7 @@ public class CheatActivity extends AppCompatActivity {
 
     private TextView mAnswerTextView;
     private Button mShowAnswerButton;
+    private TextView mSdkLevel;
     private boolean mAnswerState;
 
     public static Intent newIntent(Context packageContext, boolean answerIsTrue) {
@@ -45,6 +45,9 @@ public class CheatActivity extends AppCompatActivity {
         mAnswerTextView = findViewById(R.id.answer_text_view);
 
         mShowAnswerButton = findViewById(R.id.show_answer_button);
+
+        mSdkLevel = findViewById(R.id.sdk_level);
+        mSdkLevel.setText(getString(R.string.apiLevel, Build.VERSION.RELEASE));
 
         mShowAnswerButton.setOnClickListener(new View.OnClickListener() {
             @Override
