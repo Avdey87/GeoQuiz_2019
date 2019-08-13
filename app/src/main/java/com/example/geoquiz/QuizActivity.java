@@ -11,12 +11,10 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Set;
+
 
 
 public class QuizActivity extends AppCompatActivity {
@@ -63,6 +61,7 @@ public class QuizActivity extends AppCompatActivity {
             PRESSED = savedInstanceState.getBoolean(STATE_BUTTON, false);
             coast = savedInstanceState.getInt(COAST, 0);
             alreadyAnswer = (Map<Integer, Boolean>) savedInstanceState.getSerializable(ALREADY_ANSWERED);
+            cheatCoast = savedInstanceState.getInt(CHEAT_COAST);
 
             Log.d("FIX", "HashMap" + alreadyAnswer.size());
         }
@@ -75,7 +74,7 @@ public class QuizActivity extends AppCompatActivity {
         mPrevButton = findViewById(R.id.prev_button);
         mCheatCoastTextView = findViewById(R.id.cheat_coast);
 
-        mCheatCoastTextView.setText(Integer.toString(cheatCoast));
+
 
 
         if (PRESSED == true) {
@@ -145,6 +144,7 @@ public class QuizActivity extends AppCompatActivity {
             }
         });
         updateQuestion();
+        updateCheatCoast();
 
     }
 
@@ -162,11 +162,16 @@ public class QuizActivity extends AppCompatActivity {
                 alreadyAnswer.put(mCurrentIndex, mIsCheater);
                 pressedButton();
                 cheatCoast--;
+                updateCheatCoast();
             } else {
                 alreadyAnswer.remove(mCurrentIndex);
             }
 
         }
+    }
+
+    private void updateCheatCoast() {
+        mCheatCoastTextView.setText(Integer.toString(cheatCoast));
     }
 
     private void checkAnswer(boolean userPressedTrue) {
@@ -201,8 +206,6 @@ public class QuizActivity extends AppCompatActivity {
         if (cheatCoast == 0) {
             mCheatButton.setEnabled(false);
         }
-
-
     }
 
     private void pressedButton() {
@@ -223,31 +226,6 @@ public class QuizActivity extends AppCompatActivity {
         outState.putInt(CHEAT_COAST, cheatCoast);
     }
 
-    @Override
-    protected void onStart() {
-        super.onStart();
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-    }
-
-
-    @Override
-    protected void onStop() {
-        super.onStop();
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-    }
 }
 
 
